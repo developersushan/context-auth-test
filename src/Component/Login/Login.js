@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/UserContext';
+import { toast } from 'react-hot-toast';
 
 const Login = () => {
     const { signInFrom,user ,resetPassword} = useContext(AuthContext)
@@ -23,12 +24,15 @@ const Login = () => {
                 const user = result.user
                 console.log(user)
                 setSuccess(true)
+                toast.success("successfully completed")
+                
                 navigate('/')
                 from.reset()
             })
             .catch(error => {
 
                 setError(true)
+                toast.error("wrong password please try again later")
 
             })
     }
@@ -69,8 +73,8 @@ const Login = () => {
                                 <input type="password" name='password' placeholder="password" className="input input-bordered" />
 
 
-                                {success && <p className='text-green-700'>successfully complete !</p>}
-                                {error && <p className='text-red-700'>password didn't match ? please try again !</p>}
+                                {/* {success && <p className='text-green-700'>successfully complete !</p>}
+                                {error && <p className='text-red-700'>password didn't match ? please try again !</p>} */}
                                 <label className="label">
                                     <Link onClick={handleResetPassword} className="label-text-alt link link-hover">Forget Password?</Link>
                                 </label>

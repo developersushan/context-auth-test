@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/UserContext';
 import { FaGoogle,FaFacebookSquare,FaGithub} from "react-icons/fa";
+import { toast } from 'react-hot-toast';
 
 const Registrar = () => {
     const { createUser,verify , providerGoogle ,providerFacebook , providerGithub} = useContext(AuthContext)
@@ -31,7 +32,7 @@ const Registrar = () => {
                 setSuccess(true)
                 verify()
                 navigate('/')
-                alert("please verification your email" )
+                toast.success(" please verify your email address!")
                 form.reset()
             })
             .catch(error => {
