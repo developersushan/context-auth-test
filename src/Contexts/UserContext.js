@@ -6,10 +6,12 @@ const auth = getAuth(app)
 
 const UserContext = ({children}) => {
     const [user,setUser] = useState({})
+    const [loading,setLoading]=useState(true)
     //google provider and facebook provider and github provider
     const provider = new GoogleAuthProvider()
     const facebookProvider = new FacebookAuthProvider()
     const githubProvider = new GithubAuthProvider()
+
     const createUser =(email,password)=>{
         return createUserWithEmailAndPassword(auth,email,password)
     }
@@ -43,12 +45,13 @@ const UserContext = ({children}) => {
     useEffect(()=>{
         const unSubscribe =onAuthStateChanged(auth, currentUser=>{
             setUser(currentUser)
+            setLoading(false)
         })
         return (()=>{
             unSubscribe()
         })
     },[])
-    const authInfo = {user, createUser, signInFrom,verify ,resetPassword , providerGoogle ,providerFacebook ,providerGithub,logOut}
+    const authInfo = {user,loading, createUser, signInFrom,verify ,resetPassword , providerGoogle ,providerFacebook ,providerGithub,logOut}
     return (
         <AuthContext.Provider value={authInfo}>
             {children}
